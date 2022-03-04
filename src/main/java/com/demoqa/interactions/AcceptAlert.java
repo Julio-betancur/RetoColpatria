@@ -1,0 +1,23 @@
+package com.demoqa.interactions;
+
+import net.serenitybdd.core.steps.Instrumented;
+import net.serenitybdd.screenplay.Actor;
+import net.serenitybdd.screenplay.Interaction;
+import net.serenitybdd.screenplay.abilities.BrowseTheWeb;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
+
+public class AcceptAlert implements Interaction {
+
+    @Override
+    public <T extends Actor> void performAs(T actor) {
+        WebDriver webDriver = BrowseTheWeb.as(actor).getDriver();
+        new WebDriverWait(webDriver,10).until(ExpectedConditions.alertIsPresent());
+        BrowseTheWeb.as(actor).getAlert().accept();
+    }
+
+    public static AcceptAlert on(){
+        return Instrumented.instanceOf(AcceptAlert.class).withProperties();
+    }
+}
